@@ -4,6 +4,10 @@ int increment_five(int number){
   return number + 5;
 }
 
+int is_odd(int number){
+  return number % 2;
+}
+
 void print_array(Int_Array* array){
   for (int idx = 0; idx < array->length; idx++)
   {
@@ -19,8 +23,10 @@ int main(void)
   if(array == NULL){
     return 0;
   }
-  array->values = numbers;
+  array->values = copy_values(array->values, numbers, size);
   Int_Array *mapped_array = map(&increment_five, array);
+  Int_Array *filtered_array = filter(&is_odd, array);
   print_array(mapped_array);
+  print_array(filtered_array);
   return 0;
 }
