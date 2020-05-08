@@ -14,10 +14,13 @@ typedef struct{
 } Int_Array;
 
 
-typedef  int (*function)(int);
+typedef int (*function)(int);
+typedef int(*arithmetic_fn)(int, int);
+
 
 Int_Array *map(function, Int_Array *); 
 Int_Array *filter(function, Int_Array *); 
+int reduce(arithmetic_fn, Int_Array *, int); 
 Int_Array *create_array(int size);
 int_ptr fill_data(int_ptr, int_ptr, int);
 

@@ -8,6 +8,10 @@ int is_odd(int number){
   return number % 2;
 }
 
+int mul(int num1, int num2){
+  return num1 * num2;
+}
+
 void print_array(Int_Array* array){
   for (int idx = 0; idx < array->length; idx++)
   {
@@ -26,7 +30,9 @@ int main(void)
   array->values = fill_data(array->values, numbers, size);
   Int_Array *mapped_array = map(&increment_five, array);
   Int_Array *filtered_array = filter(&is_odd, array);
+  int sum_of_all = reduce(&mul, array, 1);
   print_array(mapped_array);
   print_array(filtered_array);
+  printf("sum of all digits are %d\n", sum_of_all);
   return 0;
 }

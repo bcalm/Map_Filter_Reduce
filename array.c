@@ -47,3 +47,11 @@ Int_Array *filter(function predicate, Int_Array* array){
   return filtered_array;
 }
 
+int reduce(arithmetic_fn reducer, Int_Array *array, int context){
+
+  for (size_t i = 0; i < array->length; i++)
+  {
+    context = (*reducer)(array->values[i], context);  
+  }
+  return context;
+}
