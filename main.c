@@ -23,7 +23,7 @@ int main(void)
   if(array == NULL){
     return 0;
   }
-  array->values = copy_values(array->values, numbers, size);
+  array->values = fill_data(array->values, numbers, size);
   Int_Array *mapped_array = map(&increment_five, array);
   Int_Array *filtered_array = filter(&is_odd, array);
   print_array(mapped_array);

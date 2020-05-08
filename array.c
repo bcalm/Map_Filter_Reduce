@@ -9,7 +9,7 @@ Int_Array *create_array(int size){
   return array;
 }
 
-int_ptr copy_values(int_ptr copy_to, int_ptr copy_from, int length)
+int_ptr fill_data(int_ptr copy_to, int_ptr copy_from, int length)
 {
   copy_to = malloc(length * sizeof(int));
   for (int idx = 0; idx < length; idx++)
@@ -26,7 +26,7 @@ Int_Array *map(function mapper, Int_Array* array){
   {
     temp_array[idx] = (*mapper)(array->values[idx]);
   }
-  mapped_array->values = copy_values(mapped_array->values, temp_array, array->length);
+  mapped_array->values = fill_data(mapped_array->values, temp_array, array->length);
   return mapped_array;
 }
 
@@ -43,7 +43,7 @@ Int_Array *filter(function predicate, Int_Array* array){
   }
   printf("a as digit %d\n",count);
   Int_Array *filtered_array = create_array(count);
-  filtered_array->values = copy_values(filtered_array->values, temp_array, count);
+  filtered_array->values = fill_data(filtered_array->values, temp_array, count);
   return filtered_array;
 }
 

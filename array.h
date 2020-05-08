@@ -19,6 +19,6 @@ typedef  int (*function)(int);
 Int_Array *map(function, Int_Array *); 
 Int_Array *filter(function, Int_Array *); 
 Int_Array *create_array(int size);
-int_ptr copy_values(int_ptr, int_ptr, int);
+int_ptr fill_data(int_ptr, int_ptr, int);
 
 #endif
