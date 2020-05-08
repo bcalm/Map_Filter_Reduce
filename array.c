@@ -12,10 +12,11 @@ Int_Array *create_array(int size){
 
 Int_Array *map(Mapper map_func, Int_Array* array){
   Int_Array *mapped_array = create_array(array->length);
+
   IS_MEMORY_NOT_ALLOCATED(mapped_array){
     return NULL;
   }
-  for (int idx = 0; idx < array->length; idx++)
+  REPEAT(array->length)
   {
     mapped_array->values[idx] = (*map_func)(array->values[idx]);
   }
@@ -30,7 +31,7 @@ Int_Array *filter(Predicate filter_func, Int_Array* array){
     return NULL;
   }
 
-  for (int idx = 0; idx < array->length; idx++)
+  REPEAT(array->length)
   {
     if((*filter_func)(array->values[idx]))
     {
@@ -45,9 +46,9 @@ Int_Array *filter(Predicate filter_func, Int_Array* array){
 
 int reduce(Reducer reduce_func, Int_Array *array, int accumulator){
 
-  for (int i = 0; i < array->length; i++)
+  REPEAT(array->length)
   {
-    accumulator = (*reduce_func)(array->values[i], accumulator);  
+    accumulator = (*reduce_func)(array->values[idx], accumulator);  
   }
   return accumulator;
 }

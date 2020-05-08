@@ -14,6 +14,7 @@ typedef struct{
 } Int_Array;
 
 #define IS_MEMORY_NOT_ALLOCATED(array) if(array == NULL || array->values == NULL)
+#define REPEAT(length) for (int idx = 0; idx < length; idx++)
 
 typedef enum
 {

@@ -13,7 +13,7 @@ int mul(int num1, int num2){
 }
 
 void print_array(Int_Array* array){
-  for (int idx = 0; idx < array->length; idx++)
+  REPEAT(array->length)
   {
     printf("%d term of array is %d\n", idx, array->values[idx]);
   }
