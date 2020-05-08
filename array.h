@@ -13,14 +13,22 @@ typedef struct{
   int length;
 } Int_Array;
 
+#define IS_MEMORY_NOT_ALLOCATED(array) if(array == NULL || array->values == NULL)
 
-typedef int (*function)(int);
-typedef int(*arithmetic_fn)(int, int);
+typedef enum
+{
+  False,
+  True
+} Boolean;
+
+typedef int (*Mapper)(int);
+typedef Boolean (*Predicate)(int);
+typedef int(*Reducer)(int, int);
 
 
-Int_Array *map(function, Int_Array *); 
-Int_Array *filter(function, Int_Array *); 
-int reduce(arithmetic_fn, Int_Array *, int); 
+Int_Array *map(Mapper, Int_Array *); 
+Int_Array *filter(Predicate, Int_Array *); 
+int reduce(Reducer, Int_Array *, int); 
 Int_Array *create_array(int size);
 
 #endif

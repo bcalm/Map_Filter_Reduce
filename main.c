@@ -4,7 +4,7 @@ int increment_five(int number){
   return number + 5;
 }
 
-int is_odd(int number){
+Boolean is_odd(int number){
   return number % 2;
 }
 
@@ -24,7 +24,7 @@ int main(void)
   int numbers[] = DEFAULT_NUMBERS;
   int size = DEFAULT_LENGTH;
   Int_Array *array = create_array(size);
-  if(array == NULL){
+  IS_MEMORY_NOT_ALLOCATED(array){
     return 0;
   }
   array->values = numbers;
