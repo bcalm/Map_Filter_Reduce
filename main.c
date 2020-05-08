@@ -27,7 +27,7 @@ int main(void)
   if(array == NULL){
     return 0;
   }
-  array->values = fill_data(array->values, numbers, size);
+  array->values = numbers;
   Int_Array *mapped_array = map(&increment_five, array);
   Int_Array *filtered_array = filter(&is_odd, array);
   int sum_of_all = reduce(&mul, array, 1);

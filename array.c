@@ -5,56 +5,48 @@ Int_Array *create_array(int size){
   if(array == NULL){
     return NULL;
   }
+  array->values = size ? malloc(size * sizeof(int)) : NULL;
   array->length = size;
   return array;
 }
 
-int_ptr fill_data(int_ptr copy_to, int_ptr copy_from, int length)
-{
-  copy_to = length ? malloc(length * sizeof(int)): NULL;
-  for (int idx = 0; idx < length; idx++)
-  {
-    copy_to[idx] = copy_from[idx];
-  }
-  return copy_to;
-}
-
 Int_Array *map(function map_func, Int_Array* array){
   Int_Array *mapped_array = create_array(array->length);
-  if(mapped_array == NULL){
+  if(mapped_array == NULL || mapped_array->values == NULL){
     return NULL;
   }
-  int temp_array[array->length];
   for (int idx = 0; idx < array->length; idx++)
   {
-    temp_array[idx] = (*map_func)(array->values[idx]);
+    mapped_array->values[idx] = (*map_func)(array->values[idx]);
   }
-  mapped_array->values = fill_data(mapped_array->values, temp_array, array->length);
   return mapped_array;
 }
 
 Int_Array *filter(function filter_func, Int_Array* array){
-  int temp_array[array->length];
   int count = 0;
+  Int_Array *filtered_array = create_array(array->length);
+
+  if(filtered_array == NULL || filtered_array->values == NULL){
+    return NULL;
+  }
   for (int idx = 0; idx < array->length; idx++)
   {
     if((*filter_func)(array->values[idx]))
     {
-      temp_array[count] = array->values[idx];
+      printf("a as digit %d\n",array->values[idx]);
+      filtered_array->values[count] = array->values[idx];
       count++;
     }
   }
-  Int_Array *filtered_array = create_array(count);
-  if(filtered_array == NULL){
-    return NULL;
-  }
-  filtered_array->values = fill_data(filtered_array->values, temp_array, count);
+  printf("a as digit %d\n",count);
+  filtered_array->values = realloc(filtered_array->values, count * sizeof(int));
+  filtered_array->length = count;
   return filtered_array;
 }
 
 int reduce(arithmetic_fn reducer, Int_Array *array, int accumulator){
 
-  for (size_t i = 0; i < array->length; i++)
+  for (int i = 0; i < array->length; i++)
   {
     accumulator = (*reducer)(array->values[i], accumulator);  
   }
