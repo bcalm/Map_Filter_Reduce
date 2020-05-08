@@ -33,6 +33,6 @@ int main(void)
   int sum_of_all = reduce(&mul, array, 1);
   print_array(mapped_array);
   print_array(filtered_array);
-  printf("sum of all digits are %d\n", sum_of_all);
+  printf("mul of all digits are %d\n", sum_of_all);
   return 0;
 }
