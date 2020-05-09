@@ -1,54 +1,60 @@
 #include "array.h"
 
-Int_Array *create_array(int size){
-  Int_Array *array = malloc(sizeof(Int_Array));
-  if(array == NULL){
-    return NULL;
-  }
-  array->values = size ? malloc(size * sizeof(int)) : NULL;
-  array->length = size;
-  return array;
-}
-
-Int_Array *map(Mapper map_func, Int_Array* array){
-  Int_Array *mapped_array = create_array(array->length);
-
-  IS_MEMORY_NOT_ALLOCATED(mapped_array){
-    return NULL;
-  }
-  REPEAT(array->length)
+Array_ptr create_array(int size)
+{
+  Array_ptr src = malloc(sizeof(Array_ptr));
+  if (src == NULL)
   {
-    mapped_array->values[idx] = (*map_func)(array->values[idx]);
+    return NULL;
   }
-  return mapped_array;
+  src->array = size ? malloc(size * sizeof(int)) : NULL;
+  src->length = size;
+  return src;
 }
 
-Int_Array *filter(Predicate filter_func, Int_Array* array){
+Array_ptr map(Array_ptr src, Mapper mapper)
+{
+  Array_ptr mapped_src = create_array(src->length);
+
+  IS_MEMORY_NOT_ALLOCATED(mapped_src)
+  {
+    return mapped_src;
+  }
+  REPEAT(src->length)
+  {
+    mapped_src->array[idx] = (*mapper)(src->array[idx]);
+  }
+  return mapped_src;
+}
+
+Array_ptr filter(Array_ptr src, Predicate predicate)
+{
   int count = 0;
-  Int_Array *filtered_array = create_array(array->length);
+  Array_ptr filtered_src = create_array(src->length);
 
-  IS_MEMORY_NOT_ALLOCATED(filtered_array){
-    return NULL;
+  IS_MEMORY_NOT_ALLOCATED(filtered_src)
+  {
+    return filtered_src;
   }
 
-  REPEAT(array->length)
+  REPEAT(src->length)
   {
-    if((*filter_func)(array->values[idx]))
+    if ((*predicate)(src->array[idx]))
     {
-      filtered_array->values[count] = array->values[idx];
+      filtered_src->array[count] = src->array[idx];
       count++;
     }
   }
-  filtered_array->values = realloc(filtered_array->values, count * sizeof(int));
-  filtered_array->length = count;
-  return filtered_array;
+  filtered_src->array = realloc(filtered_src->array, count * sizeof(int));
+  filtered_src->length = count;
+  return filtered_src;
 }
 
-int reduce(Reducer reduce_func, Int_Array *array, int accumulator){
-
-  REPEAT(array->length)
+int reduce(Array_ptr src, int accumulator, Reducer reducer)
+{
+  REPEAT(src->length)
   {
-    accumulator = (*reduce_func)(array->values[idx], accumulator);  
+    accumulator = (*reducer)(src->array[idx], accumulator);
   }
   return accumulator;
 }

@@ -1,36 +1,39 @@
-#ifndef __ARRAY_H__
-#define __ARRAY_H__
+#ifndef __ARRAY_H
+#define __ARRAY_H
 
 #include <stdio.h>
 #include <stdlib.h>
-#define DEFAULT_NUMBERS {1, 2, 3, 4, 5}
+
+#define DEFAULT_NUMBERS \
+  {                     \
+    1, 2, 3, 4, 5       \
+  }
+
 #define DEFAULT_LENGTH 5
-
-typedef int* int_ptr;
-
-typedef struct{
-  int_ptr values;
-  int length;
-} Int_Array;
-
-#define IS_MEMORY_NOT_ALLOCATED(array) if(array == NULL || array->values == NULL)
+#define IS_MEMORY_NOT_ALLOCATED(src) if (src == NULL || src->array == NULL)
 #define REPEAT(length) for (int idx = 0; idx < length; idx++)
 
 typedef enum
 {
   False,
   True
-} Boolean;
+} Bool;
 
 typedef int (*Mapper)(int);
-typedef Boolean (*Predicate)(int);
-typedef int(*Reducer)(int, int);
+typedef Bool (*Predicate)(int);
+typedef int (*Reducer)(int, int);
 
+typedef struct
+{
+  int *array;
+  int length;
+} Array;
 
-Int_Array *map(Mapper, Int_Array *); 
-Int_Array *filter(Predicate, Int_Array *); 
-int reduce(Reducer, Int_Array *, int); 
-Int_Array *create_array(int size);
+typedef Array *Array_ptr;
+
+Array_ptr map(Array_ptr src, Mapper mapper);
+Array_ptr filter(Array_ptr src, Predicate predicate);
+int reduce(Array_ptr src, int init, Reducer reducer);
+Array_ptr create_array(int size);
 
 #endif
-
